@@ -15,16 +15,26 @@ class Spider implements Crawler
     {
     }
 
-    final public function crawl(string $url, string $method = 'GET'): Webpage
+    final public function crawl(string $url, Options $options = new Options(), string $body = null): Webpage
     {
-        return new Webpage($this, $this->client->request($method, $url));
+        return new Webpage(
+            $this,
+            $this->client->request(
+                $options->method,
+                $url,
+                $options->parameters,
+                $options->files,
+                $options->server,
+                $body
+            )
+        );
     }
 
-    final public function crawlWebsite(string $url): Website
+    final public function crawlWebsite(string $url, Options $options = new Options()): Website
     {
         return new Website(
             array_values(
-                $this->followInternalLinks($this->crawl($url))
+                $this->followInternalLinks($this->crawl($url, $options))
             )
         );
     }

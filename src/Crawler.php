@@ -9,9 +9,9 @@ use SasaB\REPLCrawler\Website\Website;
 
 interface Crawler
 {
-    public function crawl(string $url, string $method = 'GET'): Webpage;
-
     public function crawlHtml(string $html): Webpage;
 
-    public function crawlWebsite(string $url): Website;
+    public function crawlWebsite(string $url, Options $options = new Options()): Website;
+
+    public function crawl(string $url, Options $options = new Options()): Webpage;
 }
