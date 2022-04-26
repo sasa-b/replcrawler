@@ -1,0 +1,34 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+require dirname(__DIR__).'/vendor/autoload.php';
+
+use SasaB\REPLCrawler\Cli\BrowseCommand;
+use Symfony\Component\Console\Application;
+use Symfony\Component\Console\ConsoleEvents;
+use Symfony\Component\Console\Event\ConsoleSignalEvent;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+
+$dispatcher = new EventDispatcher();
+$dispatcher->addListener(ConsoleEvents::SIGNAL, function (ConsoleSignalEvent $event) {
+
+    // gets the signal number
+    $signal = $event->getHandlingSignal();
+
+    if (\SIGINT === $signal) {
+        echo "bye bye!";
+    }
+});
+
+$application = new Application('browse', '0.0.1');
+$application->setDispatcher($dispatcher);
+
+$command = new BrowseCommand();
+
+$application->add($command);
+
+$application->setDefaultCommand(BrowseCommand::NAME, true);
+
+$application->run();
