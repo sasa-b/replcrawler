@@ -8,7 +8,7 @@ use SasaB\REPLCrawler\Util\Collection;
 
 class UndefinedCollectionOffset extends \InvalidArgumentException
 {
-    public static function for(Collection $collection, int|string $offset): self
+    public static function for(Collection $collection, int $offset): self
     {
         return new self(sprintf("Undefined offset [%s] in collection %s", $offset, $collection::class));
     }

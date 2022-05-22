@@ -9,6 +9,6 @@ use SasaB\REPLCrawler\Util\Collection;
 /**
  * @extends Collection<Webpage>
  */
-final class Pages extends Collection
+class Pages extends Collection
 {
 }

@@ -1,4 +1,5 @@
 tools/php-cs-fixer/vendor/
+tools/phpstan/tmp
 vendor/
 .idea
 .php-cs-fixer.cache

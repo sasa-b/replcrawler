@@ -11,13 +11,14 @@ class Options
         public array $parameters = [],
         public array $server = [],
         public array $files = [],
+        public bool $ignoreURLHash = true
     ) {
     }
 
     /**
      * @param array<string,string> $headers
      */
-    public function addHeaders(array $headers): self
+    final public function addHeaders(array $headers): self
     {
         foreach ($headers as $header => $value) {
             $header = strtoupper($header);

@@ -14,16 +14,16 @@ class Links extends Collection
 {
     final public function at(int $position): Link
     {
-        $link = $this->offsetGet($position);
+        $item = $this->offsetGet($position);
 
-        if ($link === null) {
+        if ($item === null) {
             throw UndefinedCollectionOffset::for($this, $position);
         }
 
-        return $link;
+        return $item;
     }
 
-    final public function internal(): Links
+    final public function internal(): self
     {
         return new self(
             array_values(
@@ -32,13 +32,18 @@ class Links extends Collection
         );
     }
 
-    final public function external(): Links
+    final public function external(): self
     {
         return new self(
             array_values(
                 array_filter(array_unique($this->items, SORT_REGULAR), static fn (Link $link) => $link->isExternal())
             )
         );
+    }
+
+    final public function withoutHash(): self
+    {
+        return $this->filter(fn (Link $link) => !str_contains($link->href(), '#'));
     }
 
     /**

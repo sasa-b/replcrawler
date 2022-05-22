@@ -38,7 +38,7 @@
             "tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --allow-risky=yes --config=.php-cs-fixer.dist.php"
         ],
         "phpstan": [
-            "vendor/bin/phpstan analyse src tests --configuration=tools/phpstan/phpstan.neon.dist"
+            "vendor/bin/phpstan analyse --configuration=tools/phpstan/phpstan.neon.dist"
         ]
     }
 }

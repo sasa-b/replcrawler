@@ -51,7 +51,7 @@ final class Link extends DomElement implements \Stringable
 
     public function isInternal(): bool
     {
-        return str_contains($this->href, (string) $this->baseUrl()->toUri());
+        return str_contains($this->href, (string) $this->baseUrl()->toUri()->base()->withoutHash());
     }
 
     public function isExternal(): bool

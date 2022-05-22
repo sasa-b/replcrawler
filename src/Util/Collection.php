@@ -6,15 +6,17 @@ declare(strict_types=1);
 
 namespace SasaB\REPLCrawler\Util;
 
+use Traversable;
+
 /**
- * @template TCValue
+ * @template T
  */
-abstract class Collection implements \Iterator, \Countable, \ArrayAccess
+abstract class Collection implements \IteratorAggregate, \Countable, \ArrayAccess
 {
     /**
-     * @param array<TCValue> $items
+     * @param array<int,T> $items
      */
-    public function __construct(protected array $items)
+    final public function __construct(protected array $items)
     {
     }
 
@@ -24,6 +26,9 @@ abstract class Collection implements \Iterator, \Countable, \ArrayAccess
         return $this;
     }
 
+    /**
+     * @param int $offset
+     */
     public function offsetExists(mixed $offset): bool
     {
         return array_key_exists($offset, $this->items);
@@ -31,7 +36,7 @@ abstract class Collection implements \Iterator, \Countable, \ArrayAccess
 
     /**
      * @param int $offset
-     * @return TCValue|null
+     * @return T|null
      */
     public function offsetGet(mixed $offset): mixed
     {
@@ -40,8 +45,7 @@ abstract class Collection implements \Iterator, \Countable, \ArrayAccess
 
     /**
      * @param int|null $offset
-     * @param TCValue $value
-     * @return void
+     * @param T $value
      */
     public function offsetSet(mixed $offset, mixed $value): void
     {
@@ -54,7 +58,6 @@ abstract class Collection implements \Iterator, \Countable, \ArrayAccess
 
     /**
      * @param int $offset
-     * @return void
      */
     public function offsetUnset(mixed $offset): void
     {
@@ -77,38 +80,23 @@ abstract class Collection implements \Iterator, \Countable, \ArrayAccess
     }
 
     /**
-     * @return TCValue
+     * @return Traversable<int,T>
      */
-    public function current(): mixed
+    public function getIterator(): Traversable
     {
-        return current($this->items);
-    }
-
-    public function next(): void
-    {
-        next($this->items);
-    }
-
-    public function key(): int|string|null
-    {
-        return key($this->items);
-    }
-
-    public function valid(): bool
-    {
-        return key($this->items) !== null;
-    }
-
-    public function rewind(): void
-    {
-        reset($this->items);
+        return new \ArrayIterator($this->items);
     }
 
     /**
-     * @return array<TCValue>
+     * @return array<int,T>
      */
     public function all(): array
     {
         return $this->items;
+    }
+
+    public function filter(\Closure $filter): static
+    {
+        return new static(array_filter($this->items, $filter));
     }
 }

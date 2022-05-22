@@ -37,7 +37,7 @@ final class URL implements \Stringable
         return $this->url;
     }
 
-    public function base(): string
+    public function base(): URL
     {
         $url = (string) preg_replace('/#.*$/', '', $this->url);
 
@@ -45,7 +45,12 @@ final class URL implements \Stringable
 
         [$baseUri] = explode('/', $uri);
 
-        return "$protocol://$baseUri";
+        return new self("$protocol://$baseUri");
+    }
+
+    public function withoutHash(): URL
+    {
+        return new self($this->stripHash($this->url));
     }
 
     public function equals(URL|URI $compare): bool

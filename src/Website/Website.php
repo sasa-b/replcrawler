@@ -19,20 +19,24 @@ class Website extends Collection
         return $this->items[$position] ?? null;
     }
 
-    /**
-     * @return array<Webpage>
-     */
-    public function pages(): array
+    public function pagesWithTitle(string $title): Pages
     {
-        return $this->all();
+        return new Pages($this->filter(fn (Webpage $page) => $page->title() === $title)->all());
+    }
+
+    public function pages(): Pages
+    {
+        return new Pages($this->all());
     }
 
     final public function links(): Links
     {
         $links = [];
         foreach ($this->all() as $page) {
-            $links = [...$links, ...$page->links()->all()];
+            foreach ($page->links()->internal() as $link) {
+                $links[$link->href()] = $link;
+            }
         }
-        return new Links(array_unique($links, SORT_REGULAR));
+        return new Links(array_unique(array_values($links), SORT_REGULAR));
     }
 }

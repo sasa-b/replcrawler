@@ -34,7 +34,7 @@ class Spider implements Crawler
     {
         return new Website(
             array_values(
-                $this->followInternalLinks($this->crawl($url, $options))
+                $this->followInternalLinks(page: $this->crawl($url, $options), stripHashFromURL: $options->ignoreURLHash)
             )
         );
     }
@@ -46,29 +46,43 @@ class Spider implements Crawler
 
     /**
      * @param Webpage $page
-     * @param array<string, Webpage> $crawled
+     * @param array $crawled
+     * @param bool $stripHashFromURL
      * @return array<string, Webpage>
      */
-    private function followInternalLinks(Webpage $page, array &$crawled = []): array
+    private function followInternalLinks(Webpage $page, array &$crawled = [], bool $stripHashFromURL = true): array
     {
-        $crawled[$page->url()->toString()] = $page;
+        $pageUrl = (string) (
+            $stripHashFromURL
+                ? $page->url()->withoutHash()
+                : $page->url()
+        );
+
+        $crawled[$pageUrl] = $page;
 
         $internalLinks = $page->links()->internal();
 
         foreach ($internalLinks as $link) {
-            if (isset($crawled[$link->href()])) {
+            $href = (string) (
+                $stripHashFromURL
+                    ? $link->hrefUrl()->withoutHash()
+                    : $link->hrefUrl()
+            );
+
+            if (isset($crawled[$href])) {
                 continue;
             }
 
             $newPage = $link->follow();
+            // TODO: add algorithm to match with similar_text() when we have links with #hash
             if ($newPage->html() === $page->html()) {
                 continue;
             }
 
-            $crawled[$link->href()] = $newPage;
+            $crawled[$href] = $newPage;
 
             if ($newPage->links()->internal()->isNotEmpty()) {
-                $this->followInternalLinks($newPage, $crawled);
+                $this->followInternalLinks($newPage, $crawled, $stripHashFromURL);
             }
         }
 

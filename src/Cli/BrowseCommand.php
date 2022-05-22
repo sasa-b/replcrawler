@@ -6,9 +6,10 @@ namespace SasaB\REPLCrawler\Cli;
 
 use Goutte\Client;
 use SasaB\REPLCrawler\Cli\Validator\UrlValidator;
+use SasaB\REPLCrawler\ConsoleAwareSpider;
 use SasaB\REPLCrawler\Crawler;
-use SasaB\REPLCrawler\Spider;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -30,7 +31,7 @@ final class BrowseCommand extends Command
 
     private function isREPLMode(InputInterface $input): bool
     {
-        return $input->hasOption('repl');
+        return $input->getOption('repl') === true;
     }
 
     protected function configure(): void
@@ -75,7 +76,7 @@ final class BrowseCommand extends Command
     {
         $url = $this->getUrlArgument($input);
 
-        $webpage = $page = $w = $p = $this->getCrawler()->crawlWebsite($url);
+        $webpage = $page = $w = $p = $this->getCrawler($output)->crawlWebsite($url);
 
         if ($this->isREPLMode($input)) {
             // ===============================================================================
@@ -85,20 +86,15 @@ final class BrowseCommand extends Command
             // ===============================================================================
         }
 
-
-//        var_dump(
-//            $webpage->url(),
-//            $webpage->links()->href(),
-//            $webpage->links()->internal()->href(),
-//            $webpage->links()->hrefMap(),
-//        );
-//
-
         return Command::SUCCESS;
     }
 
-    private function getCrawler(): Crawler
+    private function getCrawler(OutputInterface $output): Crawler
     {
-        return new Spider(new Client(HttpClient::create(['timeout' => 60])));
+        return new ConsoleAwareSpider(
+            new Client(HttpClient::create(['timeout' => 60])),
+            $output,
+            new ProgressBar($output)
+        );
     }
 }

@@ -6,8 +6,17 @@ namespace SasaB\REPLCrawler\Util;
 
 trait CanNormalizeURI
 {
-    public function normalize(string $uri): string
+    private function normalize(string $uri): string
     {
-        return rtrim(str_replace(['/#', '#'], ['/#', '/#'], $uri), '/');
+        if (str_contains('#', $uri) && !str_contains('/#', $uri)) {
+            $uri = str_replace('#', '/#', $uri);
+        }
+        return rtrim($uri, '/');
+    }
+
+    private function stripHash(string $uri): string
+    {
+        [$uriWithoutHash] = explode('#', $uri);
+        return $uriWithoutHash;
     }
 }

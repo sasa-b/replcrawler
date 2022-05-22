@@ -1,4 +1,13 @@
+includes:
+	- ../../phpstan-baseline.neon
+    - ../../vendor/phpstan/phpstan-phpunit/extension.neon
+
 parameters:
+    tmpDir: ./tmp
+    paths:
+        - ../../src
+        - ../../tests
+
     level: 8
 
     checkMissingIterableValueType: false

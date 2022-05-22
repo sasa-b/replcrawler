@@ -37,13 +37,18 @@ final class URI implements \Stringable
         return $this->uri;
     }
 
-    public function base(): string
+    public function base(): URI
     {
         $uri = (string) preg_replace('/#.*$/', '', $this->uri);
 
         [$baseUri] = explode('/', $uri);
 
-        return $baseUri;
+        return new self($baseUri);
+    }
+
+    public function withoutHash(): URI
+    {
+        return new self($this->stripHash($this->uri));
     }
 
     public function equals(URI|URL $compare): bool
