@@ -94,7 +94,7 @@ final class BrowseCommand extends Command
         return new ConsoleAwareSpider(
             new Client(HttpClient::create(['timeout' => 60])),
             $output,
-            new ProgressBar($output)
+//            new ProgressBar($output)
         );
     }
 }

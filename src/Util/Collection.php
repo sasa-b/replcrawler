@@ -11,7 +11,7 @@ use Traversable;
 /**
  * @template T
  */
-abstract class Collection implements \IteratorAggregate, \Countable, \ArrayAccess
+class Collection implements \IteratorAggregate, \Countable, \ArrayAccess
 {
     /**
      * @param array<int,T> $items
@@ -95,8 +95,13 @@ abstract class Collection implements \IteratorAggregate, \Countable, \ArrayAcces
         return $this->items;
     }
 
-    public function filter(\Closure $filter): static
+    public function filter(\Closure $callback): static
     {
-        return new static(array_filter($this->items, $filter));
+        return new static(array_values(array_filter($this->items, $callback)));
+    }
+
+    public function each(\Closure $callback): static
+    {
+        return new static(array_map($callback, $this->items));
     }
 }

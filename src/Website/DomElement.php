@@ -7,7 +7,7 @@ namespace SasaB\REPLCrawler\Website;
 use SasaB\REPLCrawler\Util\CanDelegateProperty;
 use Symfony\Component\DomCrawler\Crawler as ElementCrawler;
 
-abstract class DomElement implements Element
+class DomElement implements Element
 {
     use CanDelegateProperty;
 
@@ -50,5 +50,10 @@ abstract class DomElement implements Element
     final public function baseUrl(): URL
     {
         return new URL($this->crawler()->getBaseHref() ?? '');
+    }
+
+    final public function attribute(string $name): ?string
+    {
+        return $this->crawler()->attr($name);
     }
 }

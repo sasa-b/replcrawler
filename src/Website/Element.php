@@ -17,4 +17,6 @@ interface Element
     public function nodeName(): string;
 
     public function page(): ?Webpage;
+
+    public function attribute(string $name): ?string;
 }

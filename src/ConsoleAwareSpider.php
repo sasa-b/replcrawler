@@ -16,7 +16,7 @@ final class ConsoleAwareSpider implements Crawler
     public function __construct(
         private readonly Client $client,
         private readonly OutputInterface $output,
-        private readonly ProgressBar $progressBar
+//        private readonly ProgressBar $progressBar
     ) {
     }
 
@@ -52,9 +52,9 @@ final class ConsoleAwareSpider implements Crawler
         );
     }
 
-    public function crawlHtml(string $html): Webpage
+    public function crawlHtml(string $html, ?string $url = null, Options $options = new Options()): Webpage
     {
-        return new Webpage($this, new ElementCrawler($html));
+        return new Webpage($this, new ElementCrawler(node: $html, uri: $url));
     }
 
     /**

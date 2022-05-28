@@ -9,7 +9,7 @@ use SasaB\REPLCrawler\Website\Website;
 
 interface Crawler
 {
-    public function crawlHtml(string $html): Webpage;
+    public function crawlHtml(string $html, ?string $url = null, Options $options = new Options()): Webpage;
 
     public function crawlWebsite(string $url, Options $options = new Options()): Website;
 

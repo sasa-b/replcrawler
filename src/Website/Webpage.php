@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SasaB\REPLCrawler\Website;
 
 use SasaB\REPLCrawler\Crawler;
+use SasaB\REPLCrawler\Util\Collection;
 use Symfony\Component\DomCrawler\Crawler as ElementCrawler;
 
 class Webpage extends DomElement
@@ -44,18 +45,24 @@ class Webpage extends DomElement
         return $this->crawler()->filter('title')->text();
     }
 
-    final public function scripts(): Scripts
+    /**
+     * @return Collection<Script>
+     */
+    final public function scripts(): Collection
     {
-        return new Scripts(
+        return new Collection(
             $this->crawler()
                 ->filter('script')
                 ->each(fn (ElementCrawler $elementCrawler) => new Script($elementCrawler, $this))
         );
     }
 
-    final public function styles(): Styles
+    /**
+     * @return Collection<Style>
+     */
+    final public function styles(): Collection
     {
-        return new Styles(
+        return new Collection(
             array_merge(
                 $this->crawler()
                     ->filter('style')
@@ -67,7 +74,14 @@ class Webpage extends DomElement
         );
     }
 
-    final public function forms()
+    /**
+     * @param string $selector
+     * @return Collection<DomElement>
+     */
+    final public function querySelector(string $selector): Collection
     {
+        return new Collection(
+            $this->crawler()->filter($selector)->each(fn (ElementCrawler $crawler) => new DomElement($crawler, $this))
+        );
     }
 }

@@ -39,6 +39,14 @@ class SpiderTest extends TestCase
 
         $this->assertInstanceOf(Webpage::class, $indexPage);
         $this->assertSame('https://sasablagojevic.com', (string) $indexPage->url());
+
+        $this->assertSame([
+            'https://sasablagojevic.com',
+            'https://sasablagojevic.com#contactModal',
+            'https://sasablagojevic.com/blog',
+            'https://sasablagojevic.com#quoteModal',
+            'https://sasablagojevic.com/feed/blog.rss',
+        ], array_map(static fn (Link $link) => $link->href(), $indexPage->links()->internal()->all()));
     }
 
     public function test_it_only_crawls_unique_links(): void
@@ -58,8 +66,16 @@ class SpiderTest extends TestCase
     {
         $html = trim((string) file_get_contents(__DIR__.'/data/sasablagojevic.html'), "\n");
 
-        $indexPage = $this->fixture->crawlHtml($html);
+        $indexPage = $this->fixture->crawlHtml($html, 'https://sasablagojevic.com');
 
         $this->assertSame($html, $indexPage->html());
+
+        $this->assertSame([
+            'https://sasablagojevic.com',
+            'https://sasablagojevic.com#contactModal',
+            'https://sasablagojevic.com/blog',
+            'https://sasablagojevic.com#quoteModal',
+            'https://sasablagojevic.com/feed/blog.rss',
+        ], array_map(static fn (Link $link) => $link->href(), $indexPage->links()->internal()->all()));
     }
 }

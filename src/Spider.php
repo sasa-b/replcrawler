@@ -39,9 +39,9 @@ class Spider implements Crawler
         );
     }
 
-    final public function crawlHtml(string $html): Webpage
+    final public function crawlHtml(string $html, ?string $url = null, Options $options = new Options()): Webpage
     {
-        return new Webpage($this, new ElementCrawler($html));
+        return new Webpage($this, new ElementCrawler(node: $html, uri: $url));
     }
 
     /**

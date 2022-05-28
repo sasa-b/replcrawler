@@ -20,7 +20,7 @@ final class Link extends DomElement implements \Stringable
      * @param ElementCrawler $elementCrawler
      */
     public function __construct(
-        private        readonly Crawler $spider,
+        private readonly Crawler $spider,
         ElementCrawler $elementCrawler,
         Webpage $webPage
     ) {
