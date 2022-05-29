@@ -19,13 +19,9 @@ class Website extends Collection
         return $this->items[$position] ?? null;
     }
 
-    /**
-     * @param string $title
-     * @return Collection<Webpage>
-     */
-    public function pagesWithTitle(string $title): Collection
+    public function pageWithTitle(string $title): ?Webpage
     {
-        return new Collection($this->filter(fn (Webpage $page) => $page->title() === $title)->all());
+        return $this->filter(fn (Webpage $page) => $page->title() === $title)->current();
     }
 
     /**

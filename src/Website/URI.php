@@ -55,4 +55,9 @@ final class URI implements \Stringable
     {
         return $this->uri === (string) ($compare instanceof URL ? $compare->toUri() : $compare);
     }
+
+    public function path(): string
+    {
+        return str_replace($this->base()->toString(), '', $this->uri);
+    }
 }

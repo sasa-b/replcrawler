@@ -17,27 +17,27 @@ class DomElement implements Element
     ) {
     }
 
-    public function page(): ?Webpage
+    final public function page(): ?Webpage
     {
         return $this->webPage;
     }
 
-    public function crawler(): ElementCrawler
+    final public function crawler(): ElementCrawler
     {
         return $this->elementCrawler;
     }
 
-    public function text(): string
+    final public function text(): string
     {
         return $this->elementCrawler->text();
     }
 
-    public function html(): string
+    final public function html(): string
     {
         return $this->elementCrawler->html();
     }
 
-    public function nodeName(): string
+    final public function nodeName(): string
     {
         return strtolower($this->elementCrawler->nodeName());
     }

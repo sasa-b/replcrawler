@@ -46,7 +46,7 @@ class SpiderTest extends TestCase
             'https://sasablagojevic.com/blog',
             'https://sasablagojevic.com#quoteModal',
             'https://sasablagojevic.com/feed/blog.rss',
-        ], array_map(static fn (Link $link) => $link->href(), $indexPage->links()->internal()->all()));
+        ], array_map(static fn (Link $link) => $link->href(), $website->links()->internal()->all()));
     }
 
     public function test_it_only_crawls_unique_links(): void

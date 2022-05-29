@@ -2,22 +2,27 @@
 
 declare(strict_types=1);
 
-namespace SasaB\REPLCrawler;
+namespace SasaB\REPLCrawler\Cli;
 
 use Goutte\Client;
+use SasaB\REPLCrawler\Crawler;
+use SasaB\REPLCrawler\Options;
 use SasaB\REPLCrawler\Website\Webpage;
 use SasaB\REPLCrawler\Website\Website;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DomCrawler\Crawler as ElementCrawler;
 
-final class ConsoleAwareSpider implements Crawler
+final class Spider implements Crawler
 {
     public function __construct(
         private readonly Client $client,
         private readonly OutputInterface $output,
-//        private readonly ProgressBar $progressBar
+        private readonly ProgressBar $progressBar,
+        private readonly bool $showProgressBar = true
     ) {
+        $this->progressBar->setFormat('[%bar%] %memory%');
+        $this->progressBar->setBarCharacter('<comment>=</comment>');
     }
 
     public function crawl(string $url, Options $options = new Options(), string $body = null): Webpage
@@ -39,17 +44,29 @@ final class ConsoleAwareSpider implements Crawler
     {
         $this->output->writeln("Crawling: $url");
 
-        //$this->progressBar->display();
+        if ($this->showProgressBar) {
+            $this->progressBar->display();
+        }
 
         $page = $this->crawl($url, $options);
 
-        // $this->progressBar->advance();
+        if ($this->showProgressBar) {
+            $this->progressBar->advance();
+        }
 
-        return new Website(
+        $website = new Website(
             array_values(
                 $this->followInternalLinks($page)
             )
         );
+
+        if ($this->showProgressBar) {
+            $this->progressBar->finish();
+        }
+
+        $this->output->write("\n");
+
+        return $website;
     }
 
     public function crawlHtml(string $html, ?string $url = null, Options $options = new Options()): Webpage
@@ -70,19 +87,29 @@ final class ConsoleAwareSpider implements Crawler
 
         foreach ($internalLinks as $link) {
             if (isset($crawled[$link->href()])) {
-                $this->output->writeln("Skipping: {$link->href()} already crawled.");
+                if ($this->showProgressBar) {
+                    $this->progressBar->advance();
+                }
                 continue;
             }
 
-            $this->output->writeln("Crawling: {$link->href()}");
             $newPage = $link->follow();
-//            $this->progressBar->advance();
+            if ($this->showProgressBar) {
+                $this->progressBar->advance();
+            }
 
             if ($newPage->html() === $page->html()) {
+                if ($this->showProgressBar) {
+                    $this->progressBar->advance();
+                }
                 continue;
             }
 
             $crawled[$link->href()] = $newPage;
+
+            if (!$this->showProgressBar) {
+                $this->output->writeln("Crawled: {$link->href()}");
+            }
 
             if ($newPage->links()->internal()->isNotEmpty()) {
                 $this->followInternalLinks($newPage, $crawled);

@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace SasaB\REPLCrawler\Cli;
 
 use Goutte\Client;
+use SasaB\REPLCrawler\Cli\Exception\InvalidActionChoice;
 use SasaB\REPLCrawler\Cli\Validator\UrlValidator;
-use SasaB\REPLCrawler\ConsoleAwareSpider;
 use SasaB\REPLCrawler\Crawler;
+use SasaB\REPLCrawler\Website\Link;
+use SasaB\REPLCrawler\Website\Website;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Helper\QuestionHelper;
@@ -15,6 +17,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\HttpClient\HttpClient;
 
@@ -34,14 +37,19 @@ final class BrowseCommand extends Command
         return $input->getOption('repl') === true;
     }
 
+    private function isPrintTreeMode(InputInterface $input): bool
+    {
+        return $input->hasOption('print-tree');
+    }
+
     protected function configure(): void
     {
         $this->addArgument('url', InputArgument::REQUIRED);
 
-        $this->addOption('headers', 'hs', InputOption::VALUE_OPTIONAL);
-        $this->addOption('cookies', 'cs', InputOption::VALUE_OPTIONAL);
-        $this->addOption('config', 'cn', InputOption::VALUE_OPTIONAL);
-        $this->addOption('repl', 'r', InputOption::VALUE_NONE);
+        $this->addOption('headers', 'hs', InputOption::VALUE_OPTIONAL, 'Add headers request');
+        $this->addOption('cookies', 'cs', InputOption::VALUE_OPTIONAL, 'Add cookies request');
+        $this->addOption('config', 'cn', InputOption::VALUE_OPTIONAL, 'Path to config file');
+        $this->addOption('repl', 'r', InputOption::VALUE_NONE, 'End in REPL mode');
 
         $this->addUsage('sasablagojevic.com');
     }
@@ -76,25 +84,68 @@ final class BrowseCommand extends Command
     {
         $url = $this->getUrlArgument($input);
 
-        $webpage = $page = $w = $p = $this->getCrawler($output)->crawlWebsite($url);
+        $website = $site = $w = $this->getCrawler($output)->crawlWebsite($url);
 
         if ($this->isREPLMode($input)) {
             // ===============================================================================
             // REPL MODE
-            \Psy\debug(compact('webpage', 'page', 'w', 'p'));
-            // $webpage, $page, $w, $p - variables pointing to the same crawled webpage object
+            \Psy\debug(compact('website', 'site', 'w'));
+            // $website, $site, $w, - variables pointing to the same crawled website object
             // ===============================================================================
+            return Command::SUCCESS;
         }
+
+        $output->writeln("Crawled {$website->count()} pages.");
+
+
+        $action = $this->getActionChoice($input, $output);
+
+        $selectedElement = null;
+
+        match ($action) {
+            Action::READ_PAGE => $output->writeln($website->pageAt(0)?->text()),
+            Action::NAVIGATE_TO => $this->getLinkChoice($website, $input, $output),
+            Action::SELECT_ELEMENT => $this->selectDomElement($input, $output),
+            default => throw new InvalidActionChoice()
+        };
 
         return Command::SUCCESS;
     }
 
+    private function getActionChoice(InputInterface $input, OutputInterface $output): Action
+    {
+        $helper = $this->getHelper('question');
+        $question = new ChoiceQuestion(
+            'What do you want to do next?',
+            [
+                Action::READ_PAGE->value => 'Read page',
+                Action::SELECT_ELEMENT->value => 'Select DOM element',
+                Action::NAVIGATE_TO->value => 'Navigate to a different page'
+            ],
+            Action::READ_PAGE->value
+        );
+        $question->setErrorMessage('%s is invalid choice value.');
+
+        return Action::from((int) $helper->ask($input, $output, $question));
+    }
+
     private function getCrawler(OutputInterface $output): Crawler
     {
-        return new ConsoleAwareSpider(
+        return new Spider(
             new Client(HttpClient::create(['timeout' => 60])),
             $output,
-//            new ProgressBar($output)
+            new ProgressBar($output)
         );
+    }
+
+    private function getLinkChoice(Website $website, InputInterface $input, OutputInterface $output): int
+    {
+        $helper = $this->getHelper('question');
+        $question = new ChoiceQuestion(
+            'Which link do you want to browse?',
+            $website->links()->each(fn (Link $link) => $link->href())->all(),
+        );
+        $question->setErrorMessage('%s is invalid choice value.');
+        return (int) $helper->ask($input, $output, $question);
     }
 }

@@ -23,18 +23,18 @@ class Links extends Collection
         return $item;
     }
 
-    final public function internal(): self
+    final public function internal(): Links
     {
-        return new self(
+        return new Links(
             array_values(
                 array_filter(array_unique($this->items, SORT_REGULAR), static fn (Link $link) => $link->isInternal())
             )
         );
     }
 
-    final public function external(): self
+    final public function external(): Links
     {
-        return new self(
+        return new Links(
             array_values(
                 array_filter(array_unique($this->items, SORT_REGULAR), static fn (Link $link) => $link->isExternal())
             )

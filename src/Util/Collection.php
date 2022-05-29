@@ -104,4 +104,28 @@ class Collection implements \IteratorAggregate, \Countable, \ArrayAccess
     {
         return new static(array_map($callback, $this->items));
     }
+
+    /**
+     * @return T|null
+     */
+    public function current(): mixed
+    {
+        return current($this->items) ?: null;
+    }
+
+    /**
+     * @return T|null
+     */
+    public function first(): mixed
+    {
+        return $this->items[0] ?? null;
+    }
+
+    /**
+     * @return T|null
+     */
+    public function last(): mixed
+    {
+        return $this->items[$this->count() - 1] ?? null;
+    }
 }
