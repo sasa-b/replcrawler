@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SasaB\REPLCrawler\Website;
+namespace SasaB\REPLCrawler\Dom;
 
 use SasaB\REPLCrawler\Util\Collection;
 use Symfony\Component\DomCrawler\Crawler as ElementCrawler;

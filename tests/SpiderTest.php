@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace SasaB\REPLCrawler\Tests;
 
 use Goutte\Client;
+use SasaB\REPLCrawler\Dom\Link;
 use SasaB\REPLCrawler\Spider;
-use SasaB\REPLCrawler\Website\Link;
-use SasaB\REPLCrawler\Website\Webpage;
-use SasaB\REPLCrawler\Website\Website;
+use SasaB\REPLCrawler\Webpage;
+use SasaB\REPLCrawler\Website;
 use Symfony\Component\HttpClient\HttpClient;
 
 class SpiderTest extends TestCase
@@ -46,7 +46,7 @@ class SpiderTest extends TestCase
             'https://sasablagojevic.com/blog',
             'https://sasablagojevic.com#quoteModal',
             'https://sasablagojevic.com/feed/blog.rss',
-        ], array_map(static fn (Link $link) => $link->href(), $website->links()->internal()->all()));
+        ], array_map(static fn (Link $link) => $link->href(), $indexPage->links()->internal()->all()));
     }
 
     public function test_it_only_crawls_unique_links(): void

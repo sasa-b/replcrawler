@@ -8,8 +8,8 @@ use Goutte\Client;
 use SasaB\REPLCrawler\Cli\Exception\InvalidActionChoice;
 use SasaB\REPLCrawler\Cli\Validator\UrlValidator;
 use SasaB\REPLCrawler\Crawler;
-use SasaB\REPLCrawler\Website\Link;
-use SasaB\REPLCrawler\Website\Website;
+use SasaB\REPLCrawler\Dom\Link;
+use SasaB\REPLCrawler\Website;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Helper\QuestionHelper;
@@ -103,7 +103,8 @@ final class BrowseCommand extends Command
         $selectedElement = null;
 
         match ($action) {
-            Action::READ_PAGE => $output->writeln($website->pageAt(0)?->text()),
+            Action::PRINT_TEXT => $output->writeln($website->pageAt(0)?->text()),
+            Action::PRINT_HTML => $output->writeln($website->pageAt(0)?->html()),
             Action::NAVIGATE_TO => $this->getLinkChoice($website, $input, $output),
             Action::SELECT_ELEMENT => $this->selectDomElement($input, $output),
             default => throw new InvalidActionChoice()
@@ -118,11 +119,12 @@ final class BrowseCommand extends Command
         $question = new ChoiceQuestion(
             'What do you want to do next?',
             [
-                Action::READ_PAGE->value => 'Read page',
+                Action::PRINT_TEXT->value => 'Print text',
+                Action::PRINT_HTML->value => 'Print html',
                 Action::SELECT_ELEMENT->value => 'Select DOM element',
                 Action::NAVIGATE_TO->value => 'Navigate to a different page'
             ],
-            Action::READ_PAGE->value
+            Action::PRINT_TEXT->value
         );
         $question->setErrorMessage('%s is invalid choice value.');
 
@@ -147,5 +149,9 @@ final class BrowseCommand extends Command
         );
         $question->setErrorMessage('%s is invalid choice value.');
         return (int) $helper->ask($input, $output, $question);
+    }
+
+    private function selectDomElement(InputInterface $input, OutputInterface $output)
+    {
     }
 }

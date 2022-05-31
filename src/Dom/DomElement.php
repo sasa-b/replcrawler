@@ -2,9 +2,11 @@
 
 declare(strict_types=1);
 
-namespace SasaB\REPLCrawler\Website;
+namespace SasaB\REPLCrawler\Dom;
 
+use SasaB\REPLCrawler\URL;
 use SasaB\REPLCrawler\Util\CanDelegateProperty;
+use SasaB\REPLCrawler\Webpage;
 use Symfony\Component\DomCrawler\Crawler as ElementCrawler;
 
 class DomElement implements Element

@@ -2,9 +2,15 @@
 
 declare(strict_types=1);
 
-namespace SasaB\REPLCrawler\Website;
+namespace SasaB\REPLCrawler;
 
-use SasaB\REPLCrawler\Crawler;
+use SasaB\REPLCrawler\Dom\Body;
+use SasaB\REPLCrawler\Dom\DomElement;
+use SasaB\REPLCrawler\Dom\Head;
+use SasaB\REPLCrawler\Dom\Link;
+use SasaB\REPLCrawler\Dom\Links;
+use SasaB\REPLCrawler\Dom\Script;
+use SasaB\REPLCrawler\Dom\Style;
 use SasaB\REPLCrawler\Util\Collection;
 use Symfony\Component\DomCrawler\Crawler as ElementCrawler;
 

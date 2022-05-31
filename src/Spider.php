@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace SasaB\REPLCrawler;
 
 use Goutte\Client;
-use SasaB\REPLCrawler\Website\Webpage;
-use SasaB\REPLCrawler\Website\Website;
 use Symfony\Component\DomCrawler\Crawler as ElementCrawler;
 
 class Spider implements Crawler

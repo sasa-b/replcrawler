@@ -6,7 +6,8 @@ namespace SasaB\REPLCrawler\Cli;
 
 enum Action: int
 {
-    case READ_PAGE = 0;
-    case SELECT_ELEMENT = 1;
-    case NAVIGATE_TO = 2;
+    case PRINT_TEXT = 0;
+    case PRINT_HTML = 1;
+    case SELECT_ELEMENT = 2;
+    case NAVIGATE_TO = 3;
 }

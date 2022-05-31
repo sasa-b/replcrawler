@@ -6,5 +6,4 @@ namespace SasaB\REPLCrawler\Cli\Exception;
 
 class InvalidActionChoice extends \InvalidArgumentException
 {
-
 }

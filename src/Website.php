@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace SasaB\REPLCrawler\Website;
+namespace SasaB\REPLCrawler;
 
+use SasaB\REPLCrawler\Dom\Links;
 use SasaB\REPLCrawler\Util\CanDelegateProperty;
 use SasaB\REPLCrawler\Util\Collection;
 
