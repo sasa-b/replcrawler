@@ -81,12 +81,12 @@ class Webpage extends DomElement
     }
 
     /**
-     * @template T of DomElement
+     * @template T
      * @param string $selector
-     * @param class-string<T>|null $domClassName
+     * @param class-string<T> $domClassName
      * @return T
      */
-    final public function querySelector(string $selector, string $domClassName = null): DomElement
+    final public function querySelector(string $selector, string $domClassName = DomElement::class): DomElement
     {
         $domClassName ??= DomElement::class;
 
@@ -97,15 +97,13 @@ class Webpage extends DomElement
     }
 
     /**
-     * @template T of DomElement
+     * @template T
      * @param string $selector
-     * @param class-string<T>|null $domClassName
+     * @param class-string<T> $domClassName
      * @return Collection<T>
      */
-    final public function querySelectorAll(string $selector, string $domClassName = null): Collection
+    final public function querySelectorAll(string $selector, string $domClassName = DomElement::class): Collection
     {
-        $domClassName ??= DomElement::class;
-
         return new Collection(
             $this->crawler()->filter($selector)
                 ->each(fn (ElementCrawler $elementCrawler) => new $domClassName($elementCrawler, $this->page()))
