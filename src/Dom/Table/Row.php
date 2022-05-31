@@ -25,7 +25,7 @@ class Row extends DomElement
         $this->cells = new Collection(
             $this->crawler()
                 ->filter('td')
-                ->each(fn (ElementCrawler $element) => new Cell($this, $element, $this->page()))
+                ->each(fn (ElementCrawler $elementCrawler) => new Cell($this, $elementCrawler, $this->page()))
         );
     }
 

@@ -29,7 +29,7 @@ final class Table extends DomElement
         return new Collection(
             $this->crawler()
                 ->filter('tbody tr')
-                ->each(fn (ElementCrawler $element) => new Row($element, $this->page()))
+                ->each(fn (ElementCrawler $elementCrawler) => new Row($elementCrawler, $this->page()))
         );
     }
 

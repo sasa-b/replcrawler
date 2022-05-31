@@ -81,13 +81,34 @@ class Webpage extends DomElement
     }
 
     /**
+     * @template T of DomElement
      * @param string $selector
-     * @return Collection<DomElement>
+     * @param class-string<T>|null $domClassName
+     * @return T
      */
-    final public function querySelector(string $selector): Collection
+    final public function querySelector(string $selector, string $domClassName = null): DomElement
     {
+        $domClassName ??= DomElement::class;
+
+        return new $domClassName(
+            $this->crawler()->filter($selector)->first(),
+            $this->page()
+        );
+    }
+
+    /**
+     * @template T of DomElement
+     * @param string $selector
+     * @param class-string<T>|null $domClassName
+     * @return Collection<T>
+     */
+    final public function querySelectorAll(string $selector, string $domClassName = null): Collection
+    {
+        $domClassName ??= DomElement::class;
+
         return new Collection(
-            $this->crawler()->filter($selector)->each(fn (ElementCrawler $crawler) => new DomElement($crawler, $this))
+            $this->crawler()->filter($selector)
+                ->each(fn (ElementCrawler $elementCrawler) => new $domClassName($elementCrawler, $this->page()))
         );
     }
 }
