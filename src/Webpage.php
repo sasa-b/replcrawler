@@ -88,8 +88,6 @@ class Webpage extends DomElement
      */
     final public function querySelector(string $selector, string $domClassName = DomElement::class): DomElement
     {
-        $domClassName ??= DomElement::class;
-
         return new $domClassName(
             $this->crawler()->filter($selector)->first(),
             $this->page()
