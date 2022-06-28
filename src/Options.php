@@ -23,6 +23,7 @@ class Options
         foreach ($headers as $header => $value) {
             $header = strtoupper($header);
             $header = str_starts_with($header, 'HTTP_') === false ? "HTTP_$header" : $header;
+            $header = str_replace('-', '_', $header);
             $this->server[$header] = $value;
         }
         return $this;
