@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace SasaB\REPLCrawler\Cli;
 
-use Goutte\Client;
 use SasaB\REPLCrawler\Cli\Exception\InvalidActionChoice;
 use SasaB\REPLCrawler\Cli\Validator\UrlValidator;
 use SasaB\REPLCrawler\Crawler;
 use SasaB\REPLCrawler\Dom\Link;
 use SasaB\REPLCrawler\Website;
+use Symfony\Component\BrowserKit\HttpBrowser;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Helper\QuestionHelper;
@@ -134,7 +134,7 @@ final class BrowseCommand extends Command
     private function getCrawler(OutputInterface $output): Crawler
     {
         return new Spider(
-            new Client(HttpClient::create(['timeout' => 60])),
+            new HttpBrowser(HttpClient::create(['timeout' => 60])),
             $output,
             new ProgressBar($output)
         );

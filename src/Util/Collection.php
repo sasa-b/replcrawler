@@ -16,9 +16,7 @@ class Collection implements \IteratorAggregate, \Countable, \ArrayAccess
     /**
      * @param array<int,T> $items
      */
-    final public function __construct(protected array $items)
-    {
-    }
+    final public function __construct(protected array $items) {}
 
     public function print(): self
     {

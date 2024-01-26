@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace SasaB\REPLCrawler;
 
-use Goutte\Client;
+use Symfony\Component\BrowserKit\HttpBrowser;
 use Symfony\Component\DomCrawler\Crawler as ElementCrawler;
 
 class Spider implements Crawler
 {
-    public function __construct(private readonly Client $client)
-    {
-    }
+    public function __construct(private readonly HttpBrowser $client) {}
 
     final public function crawl(string $url, Options $options = new Options(), string $body = null): Webpage
     {

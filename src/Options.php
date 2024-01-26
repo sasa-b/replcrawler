@@ -12,8 +12,7 @@ class Options
         public array $server = [],
         public array $files = [],
         public bool $ignoreURLHash = true
-    ) {
-    }
+    ) {}
 
     /**
      * @param array<string,string> $headers

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace SasaB\REPLCrawler\Tests;
 
-use Goutte\Client;
 use SasaB\REPLCrawler\Dom\Link;
 use SasaB\REPLCrawler\Spider;
 use SasaB\REPLCrawler\Webpage;
 use SasaB\REPLCrawler\Website;
+use Symfony\Component\BrowserKit\HttpBrowser;
 use Symfony\Component\HttpClient\HttpClient;
 
 class SpiderTest extends TestCase
@@ -21,7 +21,7 @@ class SpiderTest extends TestCase
     {
         parent::setUp();
 
-        $this->fixture = new Spider(new Client(HttpClient::create(['timeout' => 60])));
+        $this->fixture = new Spider(new HttpBrowser(HttpClient::create(['timeout' => 60])));
     }
 
     private function getCrawledWebsite(): Website
@@ -42,9 +42,9 @@ class SpiderTest extends TestCase
 
         $this->assertSame([
             'https://sasablagojevic.com',
+            'https://sasablagojevic.com/about-me',
             'https://sasablagojevic.com#contactModal',
             'https://sasablagojevic.com/blog',
-            'https://sasablagojevic.com#quoteModal',
             'https://sasablagojevic.com/feed/blog.rss',
         ], array_map(static fn (Link $link) => $link->href(), $indexPage->links()->internal()->all()));
     }

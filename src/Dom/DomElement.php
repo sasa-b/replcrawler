@@ -16,8 +16,7 @@ class DomElement implements Element
     public function __construct(
         private readonly ElementCrawler $elementCrawler,
         private readonly ?Webpage $webPage = null,
-    ) {
-    }
+    ) {}
 
     final public function page(): ?Webpage
     {

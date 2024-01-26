@@ -20,26 +20,32 @@
         }
     ],
     "require": {
+        "ext-dom": "*",
         "php": "^8.1",
-        "psy/psysh": "^0.11.2",
+        "psy/psysh": "^0.12",
         "symfony/console": "^6.0",
-        "fabpot/goutte": "^4.0",
         "ext-pcntl": "*",
         "webmozart/assert": "^1.10",
-        "symfony/event-dispatcher": "^6.0",
-        "ext-dom": "*"
+        "symfony/event-dispatcher": "^6.0 || ^7.0",
+        "symfony/browser-kit": "^6.0 || ^7.0",
+        "symfony/http-client": "^6.0 || ^7.0",
+        "symfony/css-selector": "^6.0 || ^7.0"
     },
     "require-dev": {
         "phpstan/phpstan": "^1.5",
-        "phpunit/phpunit": "^9.5",
+        "phpunit/phpunit": "^10.0",
         "phpstan/phpstan-phpunit": "^1.1"
     },
     "scripts": {
-        "php-cs-fixer": [
+        "code:fixer": [
             "tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --allow-risky=yes --config=.php-cs-fixer.dist.php"
         ],
         "phpstan": [
             "vendor/bin/phpstan analyse --configuration=tools/phpstan/phpstan.neon.dist"
+        ],
+        "code:quality": [
+            "@code:fixer",
+            "@phpstan"
         ]
     }
 }

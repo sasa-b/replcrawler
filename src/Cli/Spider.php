@@ -4,22 +4,22 @@ declare(strict_types=1);
 
 namespace SasaB\REPLCrawler\Cli;
 
-use Goutte\Client;
 use SasaB\REPLCrawler\Crawler;
 use SasaB\REPLCrawler\Options;
 use SasaB\REPLCrawler\Webpage;
 use SasaB\REPLCrawler\Website;
+use Symfony\Component\BrowserKit\HttpBrowser;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DomCrawler\Crawler as ElementCrawler;
 
-final class Spider implements Crawler
+final readonly class Spider implements Crawler
 {
     public function __construct(
-        private readonly Client $client,
-        private readonly OutputInterface $output,
-        private readonly ProgressBar $progressBar,
-        private readonly bool $showProgressBar = true
+        private HttpBrowser $client,
+        private OutputInterface $output,
+        private ProgressBar $progressBar,
+        private bool $showProgressBar = true
     ) {
         $this->progressBar->setFormat('[%bar%] Mem: %memory%');
         $this->progressBar->setBarCharacter('<comment>=</comment>');
@@ -75,9 +75,9 @@ final class Spider implements Crawler
     }
 
     /**
-     * @param \SasaB\REPLCrawler\Webpage $page
-     * @param array<string, \SasaB\REPLCrawler\Webpage> $crawled
-     * @return array<string, \SasaB\REPLCrawler\Webpage>
+     * @param Webpage $page
+     * @param array<string, Webpage> $crawled
+     * @return array<string, Webpage>
      */
     private function followInternalLinks(Webpage $page, array &$crawled = []): array
     {
