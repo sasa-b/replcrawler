@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SasaB\REPLCrawler\Dom;
+namespace Sco\REPLCrawler\Dom;
 
 use Symfony\Component\DomCrawler\Crawler as ElementCrawler;
 

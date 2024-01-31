@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SasaB\REPLCrawler\Dom;
+namespace Sco\REPLCrawler\Dom;
 
 final class Style extends DomElement
 {

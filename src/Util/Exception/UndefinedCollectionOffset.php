@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace SasaB\REPLCrawler\Util\Exception;
+namespace Sco\REPLCrawler\Util\Exception;
 
-use SasaB\REPLCrawler\Util\Collection;
+use Sco\REPLCrawler\Util\Collection;
 
 class UndefinedCollectionOffset extends \InvalidArgumentException
 {

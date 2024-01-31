@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace SasaB\REPLCrawler\Tests;
+namespace Sco\REPLCrawler\Tests;
 
-use SasaB\REPLCrawler\Dom\Link;
-use SasaB\REPLCrawler\Spider;
-use SasaB\REPLCrawler\Webpage;
-use SasaB\REPLCrawler\Website;
+use Sco\REPLCrawler\Dom\Link;
+use Sco\REPLCrawler\Spider;
+use Sco\REPLCrawler\Webpage;
+use Sco\REPLCrawler\Website;
 use Symfony\Component\BrowserKit\HttpBrowser;
 use Symfony\Component\HttpClient\HttpClient;
 

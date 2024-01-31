@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SasaB\REPLCrawler\Tests;
+namespace Sco\REPLCrawler\Tests;
 
 use PHPUnit\Framework\TestCase as PHPUnitTestCase;
 

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace SasaB\REPLCrawler\Dom;
+namespace Sco\REPLCrawler\Dom;
 
-use SasaB\REPLCrawler\Webpage;
+use Sco\REPLCrawler\Webpage;
 use Symfony\Component\DomCrawler\Crawler as ElementCrawler;
 
 interface Element

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SasaB\REPLCrawler;
+namespace Sco\REPLCrawler;
 
 interface Crawler
 {

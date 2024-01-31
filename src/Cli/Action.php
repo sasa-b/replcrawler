@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SasaB\REPLCrawler\Cli;
+namespace Sco\REPLCrawler\Cli;
 
 enum Action: int
 {

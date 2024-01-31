@@ -1,16 +1,17 @@
 {
-    "name": "sasa-b/replcrawler",
+    "name": "sco/replcrawler",
     "description": "Web Crawler with REPL shell",
+    "version": "0.1.0",
     "type": "project",
     "license": "artistic-2.0",
     "autoload": {
         "psr-4": {
-            "SasaB\\REPLCrawler\\": "src/"
+            "Sco\\REPLCrawler\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "SasaB\\REPLCrawler\\Tests\\": "tests/"
+            "Sco\\REPLCrawler\\Tests\\": "tests/"
         }
     },
     "authors": [

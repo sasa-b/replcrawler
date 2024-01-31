@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace SasaB\REPLCrawler;
+namespace Sco\REPLCrawler;
 
-use SasaB\REPLCrawler\Util\CanNormalizeURI;
+use Sco\REPLCrawler\Util\CanNormalizeURI;
 
 final class URI implements \Stringable
 {

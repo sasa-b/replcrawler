@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace SasaB\REPLCrawler\Cli;
+namespace Sco\REPLCrawler\Cli;
 
-use SasaB\REPLCrawler\Crawler;
-use SasaB\REPLCrawler\Options;
-use SasaB\REPLCrawler\Webpage;
-use SasaB\REPLCrawler\Website;
+use Sco\REPLCrawler\Crawler;
+use Sco\REPLCrawler\Options;
+use Sco\REPLCrawler\Webpage;
+use Sco\REPLCrawler\Website;
 use Symfony\Component\BrowserKit\HttpBrowser;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Output\OutputInterface;

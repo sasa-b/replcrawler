@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SasaB\REPLCrawler\Cli\Validator;
+namespace Sco\REPLCrawler\Cli\Validator;
 
 class UrlValidator
 {

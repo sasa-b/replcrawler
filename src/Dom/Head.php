@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace SasaB\REPLCrawler\Dom;
+namespace Sco\REPLCrawler\Dom;
 
-use SasaB\REPLCrawler\Util\Collection;
+use Sco\REPLCrawler\Util\Collection;
 use Symfony\Component\DomCrawler\Crawler as ElementCrawler;
 
 final class Head extends DomElement

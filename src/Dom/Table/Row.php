@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace SasaB\REPLCrawler\Dom\Table;
+namespace Sco\REPLCrawler\Dom\Table;
 
-use SasaB\REPLCrawler\Dom\DomElement;
-use SasaB\REPLCrawler\Util\Collection;
-use SasaB\REPLCrawler\Webpage;
+use Sco\REPLCrawler\Dom\DomElement;
+use Sco\REPLCrawler\Util\Collection;
+use Sco\REPLCrawler\Webpage;
 use Symfony\Component\DomCrawler\Crawler as ElementCrawler;
 
 class Row extends DomElement

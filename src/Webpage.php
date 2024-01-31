@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace SasaB\REPLCrawler;
+namespace Sco\REPLCrawler;
 
-use SasaB\REPLCrawler\Dom\Body;
-use SasaB\REPLCrawler\Dom\DomElement;
-use SasaB\REPLCrawler\Dom\Head;
-use SasaB\REPLCrawler\Dom\Link;
-use SasaB\REPLCrawler\Dom\Links;
-use SasaB\REPLCrawler\Dom\Script;
-use SasaB\REPLCrawler\Dom\Style;
-use SasaB\REPLCrawler\Util\Collection;
+use Sco\REPLCrawler\Dom\Body;
+use Sco\REPLCrawler\Dom\DomElement;
+use Sco\REPLCrawler\Dom\Head;
+use Sco\REPLCrawler\Dom\Link;
+use Sco\REPLCrawler\Dom\Links;
+use Sco\REPLCrawler\Dom\Script;
+use Sco\REPLCrawler\Dom\Style;
+use Sco\REPLCrawler\Util\Collection;
 use Symfony\Component\DomCrawler\Crawler as ElementCrawler;
 
 class Webpage extends DomElement

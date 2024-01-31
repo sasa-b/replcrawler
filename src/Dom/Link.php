@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace SasaB\REPLCrawler\Dom;
+namespace Sco\REPLCrawler\Dom;
 
-use SasaB\REPLCrawler\Crawler;
-use SasaB\REPLCrawler\URL;
-use SasaB\REPLCrawler\Util\CanNormalizeURI;
-use SasaB\REPLCrawler\Webpage;
+use Sco\REPLCrawler\Crawler;
+use Sco\REPLCrawler\URL;
+use Sco\REPLCrawler\Util\CanNormalizeURI;
+use Sco\REPLCrawler\Webpage;
 use Symfony\Component\DomCrawler\Crawler as ElementCrawler;
 
 final class Link extends DomElement implements \Stringable

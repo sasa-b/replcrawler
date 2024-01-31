@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace SasaB\REPLCrawler\Cli;
+namespace Sco\REPLCrawler\Cli;
 
-use SasaB\REPLCrawler\Cli\Exception\InvalidActionChoice;
-use SasaB\REPLCrawler\Cli\Validator\UrlValidator;
-use SasaB\REPLCrawler\Crawler;
-use SasaB\REPLCrawler\Dom\Link;
-use SasaB\REPLCrawler\Website;
+use Sco\REPLCrawler\Cli\Exception\InvalidActionChoice;
+use Sco\REPLCrawler\Cli\Validator\UrlValidator;
+use Sco\REPLCrawler\Crawler;
+use Sco\REPLCrawler\Dom\Link;
+use Sco\REPLCrawler\Website;
 use Symfony\Component\BrowserKit\HttpBrowser;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;

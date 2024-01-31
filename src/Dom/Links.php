@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace SasaB\REPLCrawler\Dom;
+namespace Sco\REPLCrawler\Dom;
 
-use SasaB\REPLCrawler\URL;
-use SasaB\REPLCrawler\Util\Collection;
-use SasaB\REPLCrawler\Util\Exception\UndefinedCollectionOffset;
+use Sco\REPLCrawler\URL;
+use Sco\REPLCrawler\Util\Collection;
+use Sco\REPLCrawler\Util\Exception\UndefinedCollectionOffset;
 
 /**
  * @extends Collection<Link>
@@ -94,7 +94,7 @@ class Links extends Collection
     }
 
     /**
-     * @return array<string, \SasaB\REPLCrawler\URL>
+     * @return array<string, \Sco\REPLCrawler\URL>
      */
     final public function hrefUrlMap(): array
     {

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace SasaB\REPLCrawler;
+namespace Sco\REPLCrawler;
 
-use SasaB\REPLCrawler\Dom\Links;
-use SasaB\REPLCrawler\Util\CanDelegateProperty;
-use SasaB\REPLCrawler\Util\Collection;
+use Sco\REPLCrawler\Dom\Links;
+use Sco\REPLCrawler\Util\CanDelegateProperty;
+use Sco\REPLCrawler\Util\Collection;
 
 /**
  * @extends Collection<Webpage>
