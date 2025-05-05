@@ -11,7 +11,7 @@ class Spider implements Crawler
 {
     public function __construct(private readonly HttpBrowser $client) {}
 
-    final public function crawl(string $url, Options $options = new Options(), string $body = null): Webpage
+    final public function crawl(string $url, Options $options = new Options(), ?string $body = null): Webpage
     {
         return new Webpage(
             $this,
